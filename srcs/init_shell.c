@@ -6,7 +6,7 @@
 /*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:51:10 by esimpson          #+#    #+#             */
-/*   Updated: 2024/03/11 14:09:26 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:07:59 by esimpson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 int	init_shell(char **envp)
 {
 	if (envp)
-		ft_putstr_fd(PROMPT_MSG, 1);
+		g_exit_code = 0;
 	return (0);
 }
