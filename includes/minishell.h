@@ -6,7 +6,7 @@
 /*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/03/11 14:15:02 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:55:19 by esimpson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <readline/readline.h>
 
 int		g_exit_code;
-
 char	**arr_2d_dup(char **arr);
 int		init_shell(char **envp);
 
