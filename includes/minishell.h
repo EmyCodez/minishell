@@ -6,7 +6,7 @@
 /*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/03/15 12:55:19 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:32:44 by esimpson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,29 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-/* Readline library headers*/
+/* Readline library headers */
 # include <readline/history.h>
 # include <readline/readline.h>
 
-int		g_exit_code;
-char	**arr_2d_dup(char **arr);
-int		init_shell(char **envp);
+/* Libraries from includes folder */
+# include "../includes/env.h"
 
+typedef struct s_shell
+{
+	char	*buff;
+	char	**env;
+	t_env	*env_list;
+	//t_list				**var;
+	// t_cmd				*cmds;
+}			t_shell;
+
+void		pwd(int *exit_status);
+void		env(t_shell *myshell);
+
+/* --- free.c --- */
+void		free_ptr(void *ptr);
 # define PROMPT_MSG "\033[1;36mminishell\033[34m$ \033[0m"
+
+/***sample test function will be changed ***/
+void		test_cmd(t_shell *myshell, int *exit_status);
 #endif

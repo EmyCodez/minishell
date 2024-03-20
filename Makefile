@@ -6,7 +6,7 @@
 #    By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/09 15:28:43 by esimpson          #+#    #+#              #
-#    Updated: 2024/03/15 12:53:24 by esimpson         ###   ########.fr        #
+#    Updated: 2024/03/20 16:34:21 by esimpson         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,9 @@ CFLAGS = -Wall -Wextra -Werror
 
 LIBFT_PATH = libft
 READLINE_PATH = /usr/local/opt/readline
+BUILTINS_PATH = srcs/builtins
+ENV_PATH = srcs/env
+EXEC_PATH = srcs/execution
 
 SRCS_PATH = srcs
 
@@ -23,7 +26,9 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 INCLUDE = includes
 
-SRC_FILES = $(SRCS_PATH)/minishell_main.c $(SRCS_PATH)/utils.c $(SRCS_PATH)/init_shell.c
+SRC_FILES = $(SRCS_PATH)/minishell_main.c  $(SRCS_PATH)/free.c \
+			$(BUILTINS_PATH)/pwd.c $(ENV_PATH)/init_env.c  $(ENV_PATH)/utils_env.c $(BUILTINS_PATH)/env.c \
+			$(EXEC_PATH)/test_cmd.c
  
 SRC_OBJ = $(SRC_FILES:.c=.o)
 
