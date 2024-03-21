@@ -6,7 +6,7 @@
 /*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:33:24 by esimpson          #+#    #+#             */
-/*   Updated: 2024/03/20 14:22:47 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:25:08 by esimpson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 		myshell.buff = readline(PROMPT_MSG);
 		if (!myshell.buff)
 		{
-			ft_putstr_fd("exit\n", STDOUT_FILENO);
+			ft_putstr_fd("exit\n", 1);
 			free_env_list(myshell.env_list);
 			return (exit_status);
 		}

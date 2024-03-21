@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strcmpi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 16:07:17 by lps               #+#    #+#             */
-/*   Updated: 2024/03/21 13:25:04 by esimpson         ###   ########.fr       */
+/*   Created: 2024/03/21 12:55:47 by esimpson          #+#    #+#             */
+/*   Updated: 2024/03/21 12:59:04 by esimpson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include "../../libft/libft.h"
+#include "libft.h"
 
-void	pwd(int *exit_status)
+int	ft_strcmpi(const char *s1, const char *s2)
 {
-	char	*pwd;
+	unsigned char	*p1;
+	unsigned char	*p2;
 
-	pwd = getcwd(NULL, 0);
-	if (pwd)
+	p1 = (unsigned char *)s1;
+	p2 = (unsigned char *)s2;
+	while (*p1 && (ft_tolower(*p1) == ft_tolower(*p2)))
 	{
-		printf("%s\n", pwd);
-		free(pwd);
+		p1++;
+		p2++;
 	}
-	else
-	{
-		//perror("pwd");
-		*exit_status = 1;
-	}
+	return (*p1 - *p2);
 }
