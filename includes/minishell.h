@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/03/21 15:24:08 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:40:33 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,15 @@
 # include <readline/readline.h>
 
 /* Libraries from includes folder */
+# include "../includes/builtins.h"
 # include "../includes/env.h"
 
-typedef struct s_shell
-{
-	char	*buff;
-	char	**env;
-	t_env	*env_list;
-	//t_list				**var;
-	// t_cmd				*cmds;
-}			t_shell;
-
-void		pwd(int *exit_status);
-void		env(t_shell *myshell);
-
 /* --- free.c --- */
-void		free_ptr(void *ptr);
+void	free_ptr(void *ptr);
+void	free_exit(t_shell *myshell, int *exit_status);
+
 # define PROMPT_MSG "\033[1;36mminishell\033[34m$ \033[0m"
 
 /***sample test function will be changed ***/
-void		test_cmd(t_shell *myshell, int *exit_status);
+void	test_cmd(t_shell *myshell, int *exit_status);
 #endif

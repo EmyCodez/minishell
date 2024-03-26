@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:51:03 by esimpson          #+#    #+#             */
-/*   Updated: 2024/03/18 14:59:31 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:44:33 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_env
 
 t_env				*new_env_node(char *key, char *value);
 int					env_update_value(t_env *env_list, t_env *new_node);
-void				env_list_sort(t_env **env_list, t_env *new_node);
+void				env_sort_insert(t_env **env_list, t_env *new_node);
 void				init_env_list(char **envp, t_env **env_list);
 void				free_env_node(t_env *node);
 void				free_env_list(t_env *env_list);
