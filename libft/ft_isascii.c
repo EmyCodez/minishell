@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 12:10:04 by esimpson          #+#    #+#             */
-/*   Updated: 2023/07/12 14:13:00 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:14:17 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_isascii(int c)
 {
-	if ((unsigned int)c >= 0 && (unsigned int)c <= 127)
+	if ((unsigned int)c > 0 && (unsigned int)c <= 127)
 		return (1);
 	else
 		return (0);
