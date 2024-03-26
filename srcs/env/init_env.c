@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 13:44:31 by esimpson          #+#    #+#             */
-/*   Updated: 2024/03/20 14:08:19 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:55:21 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	env_update_value(t_env *env_list, t_env *new_node)
 	return (0);
 }
 
-void	env_list_sort(t_env **env_list, t_env *new_node)
+void	env_sort_insert(t_env **env_list, t_env *new_node)
 {
 	t_env	*temp;
 	t_env	*current;
@@ -102,7 +102,7 @@ static void	add_to_env_list(char **envp, int index, t_env **env_list)
 	}
 	else
 		new_node = new_env_node(ft_strdup(envp[index]), NULL);
-	env_list_sort(env_list, new_node);
+	env_sort_insert(env_list, new_node);
 }
 
 void	init_env_list(char **envp, t_env **env_list)
