@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 13:21:40 by emilin            #+#    #+#             */
-/*   Updated: 2024/03/26 13:54:02 by emilin           ###   ########.fr       */
+/*   Updated: 2024/03/27 13:17:42 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,26 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
-void	export(char **args, t_env **env_list, int *exit_status)
+void	export(char **argv, t_env **env_list, int *exit_status)
 {
 	int		i;
 	char	*key;
 	char	*equal_loc;
 
-	if (!args[1])
+	if (!argv[1])
 	{
 		print_env(*env_list);
 		return ;
 	}
 	i = 0;
-	while (args[++i])
+	while (argv[++i])
 	{
-		equal_loc = ft_strchr(args[i], '=');
-		key = extract_key(args[i], equal_loc);
+		equal_loc = ft_strchr(argv[i], '=');
+		key = extract_key(argv[i], equal_loc);
 		if (!is_valid_key(key))
 		{
 			ft_putstr_fd("minishell: export: '", 2);
-			ft_putstr_fd(args[i], 2);
+			ft_putstr_fd(argv[i], 2);
 			ft_putstr_fd("' : not a valid identifier\n", 2);
 			*exit_status = 1;
 			free(key);

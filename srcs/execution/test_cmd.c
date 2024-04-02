@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:12:33 by esimpson          #+#    #+#             */
-/*   Updated: 2024/03/26 14:09:22 by emilin           ###   ########.fr       */
+/*   Updated: 2024/04/02 15:12:28 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,17 @@ void	test_cmd(t_shell *myshell, int *exit_status)
 		pwd(exit_status);
 	else if (ft_strcmpi(argv[0], "env") == 0)
 		env(myshell);
-	else if (ft_strcmpi(argv[0], "export") == 0)
+	else if (ft_strcmp(argv[0], "cd") == 0)
+		cd(argv, exit_status, myshell->env_list);
+	else if (ft_strcmp(argv[0], "export") == 0)
 		export(argv, &myshell->env_list, exit_status);
+	else if (ft_strcmp(argv[0], "unset") == 0)
+		unset(argv, &myshell->env_list, exit_status);
 	else if (ft_strcmp(argv[0], "exit") == 0)
-		exit_cmd(myshell, exit_status);
+		exit_cmd(argv, exit_status);
 	else
-		printf("%s: command not found\n", argv[0]);
+	{
+		ft_putstr_fd(argv[0], 2);
+		ft_putendl_fd(": command not found", 2);
+	}
 }
