@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/03/27 13:31:08 by emilin           ###   ########.fr       */
+/*   Updated: 2024/04/22 15:23:23 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@
 # include <readline/readline.h>
 
 /* Libraries from includes folder */
-# include "../includes/builtins.h"
-# include "../includes/env.h"
+# include "builtins.h"
+# include "env.h"
+# include "execution.h"
+# include "tokenizer.h"
 
 /* --- free.c --- */
 void	free_ptr(void *ptr);
@@ -37,4 +39,10 @@ void	free_exit(t_shell *myshell, int *exit_status);
 
 /***sample test function will be changed ***/
 void	test_cmd(t_shell *myshell, int *exit_status);
+
+/* --- valid_utils.c --- */
+int		is_space(char c);
+int		is_empty_str(char *str);
+int		is_quote(char c);
+int		is_valid_input(char *buff);
 #endif

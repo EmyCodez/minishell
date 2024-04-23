@@ -6,7 +6,7 @@
 #    By: emilin <emilin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/09 15:28:43 by esimpson          #+#    #+#              #
-#    Updated: 2024/03/30 14:38:24 by emilin           ###   ########.fr        #
+#    Updated: 2024/04/22 13:59:29 by emilin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ READLINE_PATH = /usr/local/opt/readline
 BUILTINS_PATH = srcs/builtins
 ENV_PATH = srcs/env
 EXEC_PATH = srcs/execution
+TOKEN_PATH = srcs/tokenizer
 
 SRCS_PATH = srcs
 
@@ -26,10 +27,12 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 INCLUDE = includes
 
-SRC_FILES = $(SRCS_PATH)/minishell_main.c  $(SRCS_PATH)/free.c \
+SRC_FILES = $(SRCS_PATH)/minishell_main.c  $(SRCS_PATH)/free.c $(SRCS_PATH)/valid_utils.c \
 			$(ENV_PATH)/init_env.c  $(ENV_PATH)/utils_env.c \
 			$(BUILTINS_PATH)/cd.c $(BUILTINS_PATH)/echo.c  $(BUILTINS_PATH)/env.c  $(BUILTINS_PATH)/exit.c \
 			$(BUILTINS_PATH)/export.c  $(BUILTINS_PATH)/unset.c $(BUILTINS_PATH)/pwd.c \
+			$(TOKEN_PATH)/token_utils.c $(TOKEN_PATH)/tokenizer.c $(TOKEN_PATH)/token_append.c  \
+			$(TOKEN_PATH)/token_list.c \
 			$(EXEC_PATH)/test_cmd.c
  
 SRC_OBJ = $(SRC_FILES:.c=.o)
