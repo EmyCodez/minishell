@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 12:52:36 by emilin            #+#    #+#             */
-/*   Updated: 2024/04/23 13:03:04 by emilin           ###   ########.fr       */
+/*   Updated: 2024/04/27 15:52:14 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ int	handle_separator(char **input, t_token **token_list)
 		return (append_separator(TK_LESS, input, token_list) && 1);
 	else if (!ft_strncmp(*input, ">", 1))
 		return (append_separator(TK_GREATER, input, token_list) && 1);
+	else if (!ft_strncmp(*input, "(", 1))
+		return (append_separator(TK_OPEN_PAR, input, token_list) && 1);
+	else if (!ft_strncmp(*input, ")", 1))
+		return (append_separator(TK_CLOSE_PAR, input, token_list) && 1);
 	else
 		return (append_separator(TK_PIPE, input, token_list) && 1);
 }
@@ -43,9 +47,7 @@ static t_token	*token_handler(char *input, int *exit_code)
 		}
 		if (is_space(*input))
 			skip_spaces(&input);
-		else if (!ft_strncmp(input, "<", 1) || !ft_strncmp(input, ">", 1)
-			|| !ft_strncmp(input, "|", 1) || !ft_strncmp(input, "(", 1)
-			|| !ft_strncmp(input, ")", 1))
+		else if (chk_spl_chars(*input))
 			error = (!handle_separator(&input, &token_list) && 1);
 		else
 			error = (!append_identifier(&token_list, &input, exit_code) && 1);

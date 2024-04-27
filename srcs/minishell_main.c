@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:33:24 by esimpson          #+#    #+#             */
-/*   Updated: 2024/04/23 13:01:01 by emilin           ###   ########.fr       */
+/*   Updated: 2024/04/27 16:02:09 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	command_execution(t_shell *myshell, int *exit_code)
 {
 	add_history(myshell->buff);
 	myshell->token_lst = tokenizer(myshell->buff, exit_code);
+	myshell->tree = parser(myshell->token_lst, exit_code);
 	test_cmd(myshell, exit_code);
 }
 
