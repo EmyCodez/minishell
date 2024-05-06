@@ -6,7 +6,7 @@
 #    By: emilin <emilin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/09 15:28:43 by esimpson          #+#    #+#              #
-#    Updated: 2024/04/27 16:04:59 by emilin           ###   ########.fr        #
+#    Updated: 2024/05/06 15:20:01 by emilin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRC_FILES = $(SRCS_PATH)/minishell_main.c  $(SRCS_PATH)/free.c $(SRCS_PATH)/vali
 			$(BUILTINS_PATH)/export.c  $(BUILTINS_PATH)/unset.c $(BUILTINS_PATH)/pwd.c \
 			$(TOKEN_PATH)/token_utils.c $(TOKEN_PATH)/tokenizer.c $(TOKEN_PATH)/token_append.c  \
 			$(TOKEN_PATH)/token_list.c \
-			$(PARSER_PATH)/parser.c \
+			$(PARSER_PATH)/parser.c  $(PARSER_PATH)/parser_error.c $(PARSER_PATH)/parser_nodes.c \
+			$(PARSER_PATH)/parser_utils.c  $(PARSER_PATH)/parser_clear.c \
 			$(EXEC_PATH)/test_cmd.c
  
 SRC_OBJ = $(SRC_FILES:.c=.o)
