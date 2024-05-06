@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/04/22 15:23:23 by emilin           ###   ########.fr       */
+/*   Updated: 2024/04/24 16:05:35 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "builtins.h"
 # include "env.h"
 # include "execution.h"
+# include "parsing.h"
 # include "tokenizer.h"
 
 /* --- free.c --- */
