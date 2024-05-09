@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:40:15 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/06 15:45:20 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/09 13:20:21 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,28 @@ int	is_redirect(t_token_type tkn_type)
 	return (0);
 }
 
-int	get_io_list(t_io_node **io_list)
+int	get_io_list(t_io_node **io_list, unsigned int *parse_error,
+		t_token **current_token)
 {
+	t_token_type	redir_type;
+	t_io_node		*tmp_io_node;
+
+	if (*parse_error)
+		return (0);
+	while (current_token && is_redirect((*current_token)->tk_type))
+	{
+		redir_type = (*current_token)->tk_type;
+		(*current_token) = (*current_token)->next;
+		if (!current_token)
+			return (set_parse_error(parse_error, ERR_SYNTAX), 0);
+		if ((*current_token)->tk_type != TK_IDENTIFIER)
+			return (set_parse_error(parse_error, ERR_SYNTAX), 0);
+		tmp_io_node = new_io_node(redir_type, (*current_token)->tk_value);
+		if (!tmp_io_node)
+			return (set_parse_error(parse_error, ERR_MEMORY), 0);
+		append_io_node(io_list, tmp_io_node);
+		(*current_token) = (*current_token)->next;
+	}
 	return (1);
 }
 
@@ -39,7 +59,7 @@ int	join_args(char **args)
 	return (1);
 }
 
-t_tree_node	*get_simple_cmd(t_token **curr_token, int *parse_error)
+t_tree_node	*get_simple_cmd(t_token **curr_token, unsigned int *parse_error)
 {
 	t_tree_node	*node;
 
