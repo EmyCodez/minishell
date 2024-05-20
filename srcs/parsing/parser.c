@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:04:16 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/09 13:24:42 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/18 16:25:22 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_tree_node	*find_term(t_token **current_token, unsigned int *parse_error,
 		return (node);
 	}
 	else
-		return (get_simple_cmd(*current_token, parse_error));
+		return (get_simple_cmd(current_token, parse_error));
 }
 
 t_tree_node	*combine_nodes(t_tree_node *left, t_tree_node *right,

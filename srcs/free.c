@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 12:07:57 by esimpson          #+#    #+#             */
-/*   Updated: 2024/05/07 11:57:43 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/20 09:49:18 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_ptr(void *ptr)
 	ptr = NULL;
 }
 
-void	free_2d_array(void **arr)
+void	free_2d_array(char **arr)
 {
 	size_t	i;
 

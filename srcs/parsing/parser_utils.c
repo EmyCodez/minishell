@@ -6,11 +6,12 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:40:15 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/09 13:20:21 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/20 09:45:27 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "../../libft/libft.h"
 
 int	is_binary_operator(t_token *curr_token)
 {
@@ -56,6 +57,8 @@ int	get_io_list(t_io_node **io_list, unsigned int *parse_error,
 
 int	join_args(char **args)
 {
+	if(!*args)
+	return(ft_strdup(""),0);
 	return (1);
 }
 
@@ -79,7 +82,7 @@ t_tree_node	*get_simple_cmd(t_token **curr_token, unsigned int *parse_error)
 		}
 		else if (is_redirect((*curr_token)->tk_type))
 		{
-			if (!get_io_list(&(node->io_list)))
+			if (!get_io_list(&(node->io_list),parse_error,curr_token))
 				return (free_ptr(node->args), free_ptr(node), NULL);
 		}
 	}
