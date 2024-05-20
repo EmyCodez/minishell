@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/04/24 16:05:35 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/20 09:49:37 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@
 
 /* --- free.c --- */
 void	free_ptr(void *ptr);
+void	free_2d_array(char **arr);
 void	free_exit(t_shell *myshell, int *exit_status);
+
 
 # define PROMPT_MSG "\033[1;36mminishell\033[34m$ \033[0m"
 

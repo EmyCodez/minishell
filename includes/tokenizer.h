@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:53:27 by emilin            #+#    #+#             */
-/*   Updated: 2024/04/27 15:50:08 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/18 16:16:23 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_token_type
 	TK_PIPE,
 	TK_OPEN_PAR,
 	TK_CLOSE_PAR,
-	TK_NL,
+	TK_NEW_LINE,
 }					t_token_type;
 
 typedef struct s_token
