@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+         #
+#    By: emilin <emilin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/12 09:22:21 by esimpson          #+#    #+#              #
-#    Updated: 2024/03/21 12:59:46 by esimpson         ###   ########.fr        #
+#    Updated: 2024/05/20 11:20:30 by emilin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC = ft_memset.c ft_atoi.c ft_isalpha.c ft_isdigit.c ft_bzero.c \
                  ft_memmove.c ft_strdup.c ft_putnbr_fd.c ft_putstr_fd.c \
                  ft_putchar_fd.c ft_itoa.c ft_putendl_fd.c ft_substr.c \
                  ft_strjoin.c ft_strtrim.c ft_strmapi.c ft_striteri.c \
-                 ft_split.c ft_atoi_base.c ft_strcmp.c ft_strcmpi.c
+                 ft_split.c ft_atoi_base.c ft_strcmp.c ft_strcmpi.c \
+                 ft_strjoin_with_space.c 
 
 GNL_SRC = get_next_line_utils.c get_next_line.c                 
 
