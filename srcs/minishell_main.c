@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:33:24 by esimpson          #+#    #+#             */
-/*   Updated: 2024/05/09 13:12:29 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/23 11:37:37 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,27 @@ static void	init_shell(t_shell *myshell, char **envp, int *exit_code)
 	init_env_list(envp, &myshell->env_list);
 }
 
+// static void inorderTraversal(t_tree_node* root) {
+//     if (root != NULL) {
+//         inorderTraversal(root->left); // Traverse left subtree
+//         printf("%d ", root->type);    // Print the data of the current node
+//         inorderTraversal(root->right); // Traverse right subtree
+//     }
+// }
+
 static void	command_execution(t_shell *myshell, int *exit_code)
 {
+	unsigned int parse_error;
+	parse_error=0;
 	add_history(myshell->buff);
 	myshell->token_lst = tokenizer(myshell->buff, exit_code);
-	myshell->tree = parser(&myshell->token_lst);
-	test_cmd(myshell, exit_code);
+	myshell->curr_token=myshell->token_lst;
+	myshell->tree = parser(&myshell->token_lst,&myshell->curr_token, &parse_error);
+	printf("\n parse error =%d",parse_error);
+	if(parse_error)
+			handle_parse_error(&parse_error,myshell, exit_code);
+	//inorderTraversal(myshell->tree);		
+	//test_cmd(myshell, exit_code);
 }
 
 int	main(int argc, char **argv, char **envp)

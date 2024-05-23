@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:40:15 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/20 09:45:27 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/23 11:26:35 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,24 @@ int	get_io_list(t_io_node **io_list, unsigned int *parse_error,
 	return (1);
 }
 
-int	join_args(char **args)
+int	join_args(char **args, unsigned int *parse_error, t_token **current_token)
 {
+	char *temp;
+	if(*parse_error)
+	return(0);
 	if(!*args)
-	return(ft_strdup(""),0);
+	*args= ft_strdup("");
+	if(!*args)
+	return(0);
+	while(*current_token && (*current_token)->tk_type == TK_IDENTIFIER)
+	{
+	 	temp=*args;
+		*args = ft_strjoin_with_space(*args, (*current_token) -> tk_value, ' ');
+		if (!*args)
+			return (free_ptr(temp), 0);
+		free_ptr(temp);
+		(*current_token) = (*current_token)->next;
+	}
 	return (1);
 }
 
@@ -66,7 +80,7 @@ t_tree_node	*get_simple_cmd(t_token **curr_token, unsigned int *parse_error)
 {
 	t_tree_node	*node;
 
-	if (parse_error)
+	if (*parse_error)
 		return (NULL);
 	node = new_node(ND_CMD);
 	if (!node)
@@ -76,7 +90,7 @@ t_tree_node	*get_simple_cmd(t_token **curr_token, unsigned int *parse_error)
 	{
 		if ((*curr_token)->tk_type == TK_IDENTIFIER)
 		{
-			if (!join_args(&(node->args)))
+			if (!join_args(&(node->args),parse_error,curr_token))
 				return (clear_cmd_node(node), set_parse_error(parse_error,
 						ERR_MEMORY), NULL);
 		}
