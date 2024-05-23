@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:54:15 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/20 08:50:03 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/21 07:21:52 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_tree_node
 }						t_tree_node;
 
 /* --- parser.c ---- */
-t_tree_node	*parser(t_token **token_list);
+t_tree_node	*parser(t_token **token_list,  t_token **current_token, unsigned int	*parse_error);
 t_tree_node	*find_expression(t_token **current_token, unsigned int *parse_error,
 		t_token **token_list);
 
@@ -78,7 +78,8 @@ void					set_parse_error(unsigned int *parse_error,
 							int error_type);
 
 /* --- parser_clear.c --- */
-void					clear_cmd_node(t_tree_node *node);
+void	clear_io_list(t_io_node **io_list);
+void	clear_cmd_node(t_tree_node *node);
 void	clear_tree(t_tree_node **tree, t_token **token_list);
 
 #endif
