@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:40:15 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/23 11:26:35 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/25 14:26:14 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int	get_io_list(t_io_node **io_list, unsigned int *parse_error,
 
 	if (*parse_error)
 		return (0);
-	while (current_token && is_redirect((*current_token)->tk_type))
+	while (*current_token && is_redirect((*current_token)->tk_type))
 	{
 		redir_type = (*current_token)->tk_type;
 		(*current_token) = (*current_token)->next;
-		if (!current_token)
+		if (!*current_token)
 			return (set_parse_error(parse_error, ERR_SYNTAX), 0);
 		if ((*current_token)->tk_type != TK_IDENTIFIER)
 			return (set_parse_error(parse_error, ERR_SYNTAX), 0);

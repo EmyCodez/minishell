@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:07:03 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/22 14:11:31 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/25 14:28:31 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_tree_node	*new_node(t_node_type node_type)
 	if (!new_tree_node)
 		return (NULL);
 	new_tree_node->type = node_type;
+	new_tree_node->left = NULL;
+	new_tree_node->right= NULL;
 	return (new_tree_node);
 }
 
