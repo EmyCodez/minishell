@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:33:24 by esimpson          #+#    #+#             */
-/*   Updated: 2024/05/25 15:14:52 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:20:06 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ static void	init_shell(t_shell *myshell, char **envp, int *exit_code)
 	myshell->env_list = NULL;
 	myshell->token_lst = NULL;
 	init_env_list(envp, &myshell->env_list);
+	myshell->curr_token = NULL;
+	myshell->tree = NULL;
+	myshell->heredoc_sigint = 0;
+	myshell->sigint_child = 0;
+}
+
+static void start_execution(t_shell *myshell, int *exit_code)
+{
+
 }
 
 // static void inorderTraversal(t_tree_node* root) {
@@ -43,7 +52,8 @@ static void	command_execution(t_shell *myshell, int *exit_code)
 	myshell->curr_token=myshell->token_lst;
 	myshell->tree = parser(&myshell->token_lst,&myshell->curr_token, &parse_error);
 	if(parse_error)
-			handle_parse_error(&parse_error,myshell, exit_code);
+		handle_parse_error(&parse_error,myshell, exit_code);
+			
 	printf("\n Tree Nodes \n");
 	//inorderTraversal(myshell->tree);		
 	//test_cmd(myshell, exit_code);

@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:43:43 by emilin            #+#    #+#             */
-/*   Updated: 2024/04/20 15:36:46 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:43:14 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ int	is_valid_input(char *buff)
 	if (ft_strlen(buff) == 0 || is_empty_str(buff))
 		return (0);
 	return (1);
+}
+
+int is_valid_variable_char(char ch)
+{
+	if(ft_isalnum(ch) || ch == '_')
+		return(1);
+	return(0);	
 }
