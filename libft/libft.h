@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 10:11:36 by esimpson          #+#    #+#             */
-/*   Updated: 2024/05/20 11:22:43 by emilin           ###   ########.fr       */
+/*   Updated: 2024/05/27 14:02:41 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_putnbr_fd(int num, int fd);
 void	ft_putendl_fd(char *s, int fd);
 int		ft_atoi_base(const char *str, int str_base);
 char	*ft_strjoin_with_space(char const *s1, char const *s2, char c);
-
+char    *ft_strjoin_free(char *s1, char *s2);
 
 /* Get Next Line Functions */
 
