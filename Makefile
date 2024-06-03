@@ -6,7 +6,7 @@
 #    By: emilin <emilin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/09 15:28:43 by esimpson          #+#    #+#              #
-#    Updated: 2024/05/06 15:20:01 by emilin           ###   ########.fr        #
+#    Updated: 2024/06/03 12:25:39 by emilin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ ENV_PATH = srcs/env
 EXEC_PATH = srcs/execution
 TOKEN_PATH = srcs/tokenizer
 PARSER_PATH = srcs/parsing
+EXPANDER_PATH = srcs/expander
+SIGNALS_PATH = srcs/signals
 
 SRCS_PATH = srcs
 
@@ -36,7 +38,11 @@ SRC_FILES = $(SRCS_PATH)/minishell_main.c  $(SRCS_PATH)/free.c $(SRCS_PATH)/vali
 			$(TOKEN_PATH)/token_list.c \
 			$(PARSER_PATH)/parser.c  $(PARSER_PATH)/parser_error.c $(PARSER_PATH)/parser_nodes.c \
 			$(PARSER_PATH)/parser_utils.c  $(PARSER_PATH)/parser_clear.c \
-			$(EXEC_PATH)/test_cmd.c
+			$(EXPANDER_PATH)/expander.c $(EXPANDER_PATH)/expand_utils.c $(EXPANDER_PATH)/expander_split.c \
+			$(EXPANDER_PATH)/clean_empty_strings.c $(EXPANDER_PATH)/strip_quotes.c $(EXPANDER_PATH)/heredoc_expander.c \
+			$(EXEC_PATH)/execute.c  $(EXEC_PATH)/execute_builtin.c $(EXEC_PATH)/execute_simple_cmd.c \
+			$(EXEC_PATH)/init_tree.c \
+			$(SIGNALS_PATH)/signals.c \
  
 SRC_OBJ = $(SRC_FILES:.c=.o)
 
