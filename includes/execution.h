@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:09:46 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/20 15:50:53 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:04:18 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,27 @@ typedef struct s_shell
 	t_token		*token_lst;
 	t_token		*curr_token;
 	t_tree_node	*tree;
+	short		heredoc_sigint;
+	short		sigint_child;
 }				t_shell;
 
 /*---parse_error.c ----*/
 
 void	handle_parse_error(unsigned int *parse_error,
 		t_shell *myshell, int *exit_code);
+
+
+/* ----- execute.c ---------- */
+int execute_node(t_tree_node *tree, short piped, t_shell *myshell, int *exit_code);
+
+/* ----- execute_builtin.c ----- */
+int	execute_builtin(char **args, int *exit_code, t_shell *myshell);
+int	chk_builtin(char *arg);
+
+/* ---- execute_simple_cmd.c ----*/
+int	execute_simple_cmd(t_tree_node *node, int piped, t_shell *myshell, int *exit_code);	
+
+/* -----  init_tree ----- */
+void	init_tree(t_tree_node *node, t_shell *myshell, int *exit_code);
 
 #endif

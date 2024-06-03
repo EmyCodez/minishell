@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/05/20 09:49:37 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/03 13:25:04 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # include "execution.h"
 # include "parsing.h"
 # include "tokenizer.h"
+# include "signals.h"
+
+# define ERR_GENERAL 2
 
 /* --- free.c --- */
 void	free_ptr(void *ptr);
@@ -48,4 +51,29 @@ int		is_space(char c);
 int		is_empty_str(char *str);
 int		is_quote(char c);
 int		is_valid_input(char *buff);
+int     is_valid_variable_char(char ch);
+
+/* ///////////////////////////////////////////////////EXPANDER/////////////////////////////////////////////////////////////  */
+
+/*  ------ expander.c ------ */
+char	**expand_str(char *str, int *exit_code, t_env **env_list);
+
+/* -------- heredoc_expander ----- */
+void	heredoc_expander(char *str, int fd, int *exit_code);
+
+/* --- clean_empty_strings.c --- */
+char	*clean_empty_strs(char *str);
+
+/* ---- expand_utils.c ---- */
+char * handle_dollar(char *str, size_t *i, int *exit_code, t_env **env_list);
+char *handle_single_quotes(char *str, size_t *i);
+char * handle_normal_str(char *str, size_t *i);
+char *handle_double_quotes(char *str, size_t *i, int *exit_code, t_env **env_list);
+
+/* ----  expander_split.c  ---------*/
+char	**expander_split(char const *s);
+
+/* ----  strip_quotes.c  ------ */
+char	*strip_quotes(char *str);
+
 #endif
