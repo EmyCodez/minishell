@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:33:24 by esimpson          #+#    #+#             */
-/*   Updated: 2024/05/30 16:20:06 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:09:29 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,23 @@ static void	init_shell(t_shell *myshell, char **envp, int *exit_code)
 {
 	*exit_code = 0;
 	myshell->env = envp;
-	myshell->env_list = NULL;
-	myshell->token_lst = NULL;
+	myshell->token_lst = 0;
 	init_env_list(envp, &myshell->env_list);
-	myshell->curr_token = NULL;
-	myshell->tree = NULL;
+	myshell->curr_token = 0;
+	myshell->tree = 0;
 	myshell->heredoc_sigint = 0;
 	myshell->sigint_child = 0;
 }
 
 static void start_execution(t_shell *myshell, int *exit_code)
 {
-
+	init_tree(myshell->tree, myshell, exit_code);
+	if(myshell->heredoc_sigint)
+	{
+		clear_tree(&myshell->tree, &myshell->token_lst);
+		myshell->heredoc_sigint = 0;
+		*exit_code = execute_node(myshell->tree,0,myshell,exit_code);
+	}
 }
 
 // static void inorderTraversal(t_tree_node* root) {
@@ -46,6 +51,7 @@ static void start_execution(t_shell *myshell, int *exit_code)
 static void	command_execution(t_shell *myshell, int *exit_code)
 {
 	unsigned int parse_error;
+	
 	parse_error=0;
 	add_history(myshell->buff);
 	myshell->token_lst = tokenizer(myshell->buff, exit_code);
@@ -56,7 +62,7 @@ static void	command_execution(t_shell *myshell, int *exit_code)
 			
 	printf("\n Tree Nodes \n");
 	//inorderTraversal(myshell->tree);		
-	//test_cmd(myshell, exit_code);
+	start_execution(myshell,exit_code);
 }
 
 int	main(int argc, char **argv, char **envp)
