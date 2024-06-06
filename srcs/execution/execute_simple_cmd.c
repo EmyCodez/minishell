@@ -6,39 +6,83 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:09:13 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/03 15:25:21 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/06 15:41:42 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+int chk_redirection(t_tree_node *node)
+{
+	t_io_node	*tmp_io;
+	//int			tmp_status;
+
+	tmp_io = node->io_list;
+	while (tmp_io)
+	{
+		// if (tmp_io->type == IO_OUT
+		// 	&& ft_out(tmp_io, &tmp_status) != EXT_SUCCESS)
+		// 	return (tmp_status);
+		// else if (tmp_io->type == IO_IN
+		// 	&& ft_in(tmp_io, &tmp_status) != EXT_SUCCESS)
+		// 	return (tmp_status);
+		// else if (tmp_io->type == IO_APPEND
+		// 	&& ft_append(tmp_io, &tmp_status) != EXT_SUCCESS)
+		// 	return (tmp_status);
+		// else if (tmp_io->type == IO_HEREDOC)
+		// 	(dup2(tmp_io->heredoc, 0), close(tmp_io->heredoc));
+		tmp_io = tmp_io->next;
+	}
+	return (EXT_SUCCESS);
+}
+
 void	reset_stds(int piped)
 {
 	if (piped)
     	return ;
-	// dup2(g_minishell.stdin, 0);
-	// dup2(g_minishell.stdout, 1);
+	//  dup2(STDIN_FILENO, 0);
+	//  dup2(STDOUT_FILENO, 1);
+}
+
+static int execute_child(t_tree_node *node, t_shell *myshell)
+{
+	int tmp_status;
+	int fork_pid;
+
+	myshell->sigint_child = 1;
+	fork_pid = fork();
+	if(!fork_pid)
+	{
+		tmp_status = chk_redirection(node);
+		if(tmp_status != 0)
+		 {
+			clear_tree(&node,&myshell->token_lst);
+			exit(EXT_GENERAL);
+		 }
+	}
+	waitpid(fork_pid,&tmp_status, 0);
+	myshell->sigint_child = 0;
+	return(get_exit_status(tmp_status));
 }
 
 int	execute_simple_cmd(t_tree_node *node, int piped, t_shell *myshell, int *exit_code)
 {
 	int		tmp_status;
-
-    tmp_status =0;
-	if (!node ->exp_args)
+	tmp_status = 0;
+	printf("\n Execute simple command\n ");
+   	if (!node ->exp_args)
 	{
-		// tmp_status = ft_check_redirection(node);
-		return (reset_stds(piped), (tmp_status && ERR_GENERAL));
+		tmp_status = chk_redirection(node);
+		return (reset_stds(piped), (tmp_status && EXT_GENERAL));
 	}
 	else if (chk_builtin((node -> exp_args)[0]))
-		printf("\n command =%s exit_code=%d \n",myshell->buff,*exit_code);
-	// {
-	// 	// tmp_status = ft_check_redirection(node);
-	// //  if (tmp_status != 0)
-	// // 	return (reset_stds(piped), ERR_GENERAL);
-	// tmp_status = execute_builtin(&node->args,exit_code,myshell);
-	// return (reset_stds(piped), tmp_status);
-    // }
+	{
+		// tmp_status = chk_redirection(node);
+		// if (tmp_status != 0)
+		// 	return (reset_stds(piped), EXT_GENERAL);
+		tmp_status = execute_builtin(node->exp_args, exit_code, myshell);
+		return (0); //(reset_stds(piped), tmp_status);
+    }
 	//else
-        return(1); // 	return (ft_exec_child(node));    
+      	return(0); // (execute_child(node, myshell));    
 }

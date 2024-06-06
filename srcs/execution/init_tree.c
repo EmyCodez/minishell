@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:29:09 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/03 13:16:24 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/05 20:04:14 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static void	init_leaf(t_tree_node *node, t_shell *myshell, int *exit_code)
 	int			pid;
 
 	if (node->args)
-		node->exp_args = expand_str(node->args, exit_code, &myshell->env_list);
+		 node->exp_args = expand_str(node->args, exit_code, &myshell->env_list);
+	node->io_list =0;	 
 	io = node->io_list;
 	while (io)
 	{
@@ -81,17 +82,20 @@ static void	init_leaf(t_tree_node *node, t_shell *myshell, int *exit_code)
 			io->heredoc = p[0];
 		}
 		else
-			io->exp_value = expand_str(node->args, exit_code, &myshell->env_list);
+			io->exp_value = expand_str(io->value, exit_code, &myshell->env_list);
 		io = io->next;
 	}
 }
 
 void	init_tree(t_tree_node *node, t_shell *myshell, int *exit_code)
 {
+	printf("\n ---- init tree ----- \n");
 	if (!node)
 		return ;
+	printf("\n node->type = %d  ND_PIPE=%d \n", node->type, ND_PIPE);	
 	if (node->type == ND_PIPE)
 	{
+		printf("\n node->type = %d  \n", node->type);
 		init_tree(node->left, myshell, exit_code);
 		if (!myshell->heredoc_sigint)
 			init_tree(node->right, myshell, exit_code);

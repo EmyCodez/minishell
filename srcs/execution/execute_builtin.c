@@ -6,17 +6,21 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:14:37 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/03 12:47:34 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/06 15:26:33 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../libft/libft.h"
 
-int	exec_builtin(char **args, int *exit_code, t_shell *myshell)
+int	execute_builtin(char **args, int *exit_code, t_shell *myshell)
 {
+	
 	if (ft_strcmp(args[0], "echo") == 0)
+		{
+			printf("\n Execute builtin ----> args[0]=%s", args[0]);
 		return (echo(args),0);
+		}
 	if (ft_strcmp(args[0], "cd") == 0)
 		return(cd(args, exit_code, myshell->env_list), 0);
 	if (ft_strcmp(args[0], "env") == 0)
@@ -28,7 +32,7 @@ int	exec_builtin(char **args, int *exit_code, t_shell *myshell)
 	if (ft_strcmp(args[0], "unset") == 0)
 		return (unset(args,&myshell->env_list,exit_code), 0);
 	exit_cmd(args, exit_code);
-	return (ERR_GENERAL);
+	return (EXT_GENERAL);
 }
 
 int	chk_builtin(char *arg)

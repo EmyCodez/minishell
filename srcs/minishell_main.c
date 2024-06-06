@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:33:24 by esimpson          #+#    #+#             */
-/*   Updated: 2024/06/03 15:09:29 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/05 20:05:19 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 static void	init_shell(t_shell *myshell, char **envp, int *exit_code)
 {
 	*exit_code = 0;
+	ft_memset(myshell, 0, sizeof(t_shell));
 	myshell->env = envp;
+	myshell->env_list = 0;
 	myshell->token_lst = 0;
 	init_env_list(envp, &myshell->env_list);
 	myshell->curr_token = 0;
-	myshell->tree = 0;
 	myshell->heredoc_sigint = 0;
 	myshell->sigint_child = 0;
 }
@@ -28,12 +29,14 @@ static void	init_shell(t_shell *myshell, char **envp, int *exit_code)
 static void start_execution(t_shell *myshell, int *exit_code)
 {
 	init_tree(myshell->tree, myshell, exit_code);
+	printf("\n tree initialized \n");
 	if(myshell->heredoc_sigint)
 	{
 		clear_tree(&myshell->tree, &myshell->token_lst);
 		myshell->heredoc_sigint = 0;
-		*exit_code = execute_node(myshell->tree,0,myshell,exit_code);
-	}
+	}	
+	*exit_code = execute_node(myshell->tree,0,myshell,exit_code);
+	//clear_tree(&myshell->tree,&myshell->token_lst);
 }
 
 // static void inorderTraversal(t_tree_node* root) {
