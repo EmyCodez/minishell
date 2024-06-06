@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/06/03 13:25:04 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/06 15:27:13 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@
 # include "tokenizer.h"
 # include "signals.h"
 
-# define ERR_GENERAL 2
+# define EXT_SUCCESS 0
+# define EXT_GENERAL 1
 
 /* --- free.c --- */
 void	free_ptr(void *ptr);

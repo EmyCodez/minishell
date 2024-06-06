@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:09:46 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/03 15:04:18 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/06 15:13:35 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	handle_parse_error(unsigned int *parse_error,
 
 
 /* ----- execute.c ---------- */
+int	get_exit_status(int status);
 int execute_node(t_tree_node *tree, short piped, t_shell *myshell, int *exit_code);
 
 /* ----- execute_builtin.c ----- */
