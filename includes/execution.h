@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:09:46 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/06 15:13:35 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:09:13 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_shell
 	t_token		*token_lst;
 	t_token		*curr_token;
 	t_tree_node	*tree;
+	int			stdin;
+	int 		stdout;
 	short		heredoc_sigint;
 	short		sigint_child;
 }				t_shell;
