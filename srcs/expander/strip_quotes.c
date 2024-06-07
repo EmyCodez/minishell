@@ -6,11 +6,12 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:19:39 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/29 13:25:23 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/07 14:12:29 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "../../libft/libft.h"
 
 static size_t	unquoted_strlen(char *str)
 {
@@ -33,7 +34,7 @@ static size_t	unquoted_strlen(char *str)
 				len += (i++ || 1);
 		}
 		else
-				len += (i++ || 1);
+			len += (i++ || 1);
 	}
 	return (len);
 }
@@ -56,7 +57,7 @@ char	*strip_quotes(char *str)
 
 	i = 0;
 	j = 0;
-	result = (char *) malloc((1 + unquoted_strlen(str)) * sizeof(char));
+	result = ft_calloc(1 + unquoted_strlen(str), sizeof(char));
 	if (!result)
 		return (NULL);
 	while (str[i])

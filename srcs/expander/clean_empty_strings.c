@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:26:06 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/28 15:33:06 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/07 14:04:54 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*clean_empty_strs(char *str)
 	if ((str[0] == '\'' && str[1] == '\'' && !str[2])
 		|| (str[0] == '"' && str[1] == '"' && !str[2]))
 		return (str);
-	tmp = (char *) malloc((ft_strlen(str) + 1)  * sizeof(char));
+	tmp = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -38,6 +38,6 @@ char	*clean_empty_strs(char *str)
 	}
 	free(str);
 	dstsize = ft_strlen(tmp) + 1;
-	result = (char *) malloc(dstsize * sizeof(char));
+	result = ft_calloc(dstsize, sizeof(char));
 	return (ft_strlcpy(result, tmp, dstsize), free_ptr(tmp), result);
 }

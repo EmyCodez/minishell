@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:12:57 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/05 12:51:44 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:33:15 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char * handle_normal_str(char *str, size_t *i)
     size_t start;
 
     start=*i;
-    printf("\n normal string = %s \n",str);
     while(str[*i] &&  str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
         (*i)++;
     return(ft_substr(str,start, *i - start));
@@ -70,7 +69,7 @@ static char *handle_double_quote_str(char *str, size_t *i)
     size_t start;
 
     start=*i;
-    while(str[*i] && str[*i] != '"' && str[*i] != '$')
+    while( str[*i] != '"' && str[*i] != '$')
         (*i)++;
     return(ft_substr(str,start, *i - start));
 }

@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:09:13 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/06 15:41:42 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:27:54 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int chk_redirection(t_tree_node *node)
 	return (EXT_SUCCESS);
 }
 
-void	reset_stds(int piped)
+void	reset_stds(int piped,t_shell *myshell)
 {
 	if (piped)
     	return ;
-	//  dup2(STDIN_FILENO, 0);
-	//  dup2(STDOUT_FILENO, 1);
+	 dup2(myshell->stdin, 0);
+	 dup2(myshell->stdout, 1);
 }
 
 static int execute_child(t_tree_node *node, t_shell *myshell)
@@ -54,7 +54,7 @@ static int execute_child(t_tree_node *node, t_shell *myshell)
 	if(!fork_pid)
 	{
 		tmp_status = chk_redirection(node);
-		if(tmp_status != 0)
+		if(tmp_status != EXT_SUCCESS)
 		 {
 			clear_tree(&node,&myshell->token_lst);
 			exit(EXT_GENERAL);
@@ -68,21 +68,20 @@ static int execute_child(t_tree_node *node, t_shell *myshell)
 int	execute_simple_cmd(t_tree_node *node, int piped, t_shell *myshell, int *exit_code)
 {
 	int		tmp_status;
-	tmp_status = 0;
-	printf("\n Execute simple command\n ");
-   	if (!node ->exp_args)
+
+	if (!node -> exp_args)
 	{
 		tmp_status = chk_redirection(node);
-		return (reset_stds(piped), (tmp_status && EXT_GENERAL));
+		return (reset_stds(piped, myshell), (tmp_status && EXT_GENERAL));
 	}
 	else if (chk_builtin((node -> exp_args)[0]))
 	{
-		// tmp_status = chk_redirection(node);
-		// if (tmp_status != 0)
-		// 	return (reset_stds(piped), EXT_GENERAL);
-		tmp_status = execute_builtin(node->exp_args, exit_code, myshell);
-		return (0); //(reset_stds(piped), tmp_status);
-    }
-	//else
-      	return(0); // (execute_child(node, myshell));    
+		tmp_status = chk_redirection(node);
+		if (tmp_status != EXT_SUCCESS)
+			return (reset_stds(piped, myshell), EXT_GENERAL);
+		tmp_status = execute_builtin(node -> exp_args, exit_code, myshell);
+		return (reset_stds(piped, myshell), tmp_status);
+	}
+	else
+		return (execute_child(node, myshell));
 }

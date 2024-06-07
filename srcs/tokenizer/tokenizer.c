@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 12:52:36 by emilin            #+#    #+#             */
-/*   Updated: 2024/04/27 15:52:14 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:41:10 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,23 @@ static t_token	*token_handler(char *input, int *exit_code)
 	return (token_list);
 }
 
-static void	print_token_list(t_token *token_list)
-{
-	printf("\n List of tokens \n");
-	while (token_list)
-	{
-		if (token_list->tk_value)
-			printf(" %s ", token_list->tk_value);
-		else
-			printf(" %d ", token_list->tk_type);
-		token_list = token_list->next;
-	}
-}
+// static void	print_token_list(t_token *token_list)
+// {
+// 	printf("\n List of tokens \n");
+// 	while (token_list)
+// 	{
+// 		if (token_list->tk_value)
+// 			printf(" %s ", token_list->tk_value);
+// 		else
+// 			printf(" %d ", token_list->tk_type);
+// 		token_list = token_list->next;
+// 	}
+// }
 
 t_token	*tokenizer(char *input, int *exit_code)
 {
 	t_token	*token_list;
 
 	token_list = token_handler(input, exit_code);
-	print_token_list(token_list);
-	printf("\n");
 	return (token_list);
 }

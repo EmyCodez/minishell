@@ -6,11 +6,12 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:29 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/29 13:44:22 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/07 14:09:56 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "../../libft/libft.h"
 
 static	void	skip_word(char const *s, size_t	*i)
 {
@@ -44,7 +45,7 @@ static char	**allocater(char const *s, char **strs)
 		{
 			start = i;
 			skip_word(s, &i);
-			strs[j] = (char*) malloc((i - start + 1) * sizeof(char));
+			strs[j] = ft_calloc(i - start + 1, sizeof(char));
 			if (!strs[j])
 				return (NULL);
 			j++;
@@ -114,7 +115,7 @@ char	**expander_split(char const *s)
 		while (s[i] && s[i] == ' ')
 			i++;
 	}
-	strs = (char **)malloc((count + 1) * sizeof(char *));
+	strs = ft_calloc(count + 1, sizeof(char *));
 	temp_arr = strs;
 	strs = allocater(s, strs);
 	if (!strs || !count)
