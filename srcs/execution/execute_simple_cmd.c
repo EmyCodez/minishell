@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_cmd.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:09:13 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/10 10:33:39 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:14:57 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ static int	execute_child(t_tree_node *node, t_shell *myshell)
 	return (get_exit_status(tmp_status));
 }
 
-int	execute_simple_cmd(t_tree_node *node, int piped, t_shell *myshell,
-		int *exit_code)
+int	execute_simple_cmd(t_tree_node *node, int piped, t_shell *myshell)
 {
 	int	tmp_status;
 
@@ -80,7 +79,7 @@ int	execute_simple_cmd(t_tree_node *node, int piped, t_shell *myshell,
 		tmp_status = chk_redirection(node);
 		if (tmp_status != EXT_SUCCESS)
 			return (reset_stds(piped, myshell), EXT_GENERAL);
-		tmp_status = execute_builtin(node->exp_args, exit_code, myshell);
+		tmp_status = execute_builtin(node->exp_args, myshell);
 		return (reset_stds(piped, myshell), tmp_status);
 	}
 	else

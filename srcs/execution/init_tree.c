@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:29:09 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/09 12:37:11 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:03:03 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	heredoc_sigint_handler(int signum)
 	exit(SIGINT);
 }
 
-void	ft_heredoc(t_io_node *io, int p[2], int *exit_code, t_shell *myshell)
+void	ft_heredoc(t_io_node *io, int p[2],  t_shell *myshell)
 {
 	char	*line;
 	char	*quotes;
@@ -37,14 +37,14 @@ void	ft_heredoc(t_io_node *io, int p[2], int *exit_code, t_shell *myshell)
 		if (is_delimiter(io->value, line))
 			break ;
 		if (!*quotes)
-			heredoc_expander(line, p[1], myshell, exit_code);
+			heredoc_expander(line, p[1], myshell);
 		else
 			{
 				ft_putstr_fd(line, p[1]);
 				ft_putstr_fd("\n", p[1]);
 			}
 	}
-	free_exit(myshell, exit_code);
+	clean_shell(myshell);
 	exit(0);
 }
 
@@ -59,14 +59,14 @@ static int	leave_leaf(int p[2], int *pid, t_shell *myshell)
 	return (0);
 }
 
-static void	init_leaf(t_tree_node *node, t_shell *myshell, int *exit_code)
+static void	init_leaf(t_tree_node *node, t_shell *myshell)
 {
 	t_io_node	*io;
 	int			p[2];
 	int			pid;
 
 	if (node->args)
-		 node->exp_args = expand_str(node->args, exit_code, &myshell->env_list);
+		 node->exp_args = expand_str(node->args, &myshell->exit_code, &myshell->env_list);
 	node->io_list = 0;	 
 	io = node->io_list;
 	while (io)
@@ -77,27 +77,27 @@ static void	init_leaf(t_tree_node *node, t_shell *myshell, int *exit_code)
 			myshell->sigint_child = 1;
 			pid = (signal(SIGQUIT, SIG_IGN), fork());
 			if (!pid)
-				ft_heredoc(io, p, exit_code, myshell);
+				ft_heredoc(io, p, myshell);
 			if (leave_leaf(p, &pid, myshell))
 				return ;
 			io->heredoc = p[0];
 		}
 		else
-			io->exp_value = expand_str(io->value, exit_code, &myshell->env_list);
+			io->exp_value = expand_str(io->value, &myshell->exit_code, &myshell->env_list);
 		io = io->next;
 	}
 }
 
-void	init_tree(t_tree_node *node, t_shell *myshell, int *exit_code)
+void	init_tree(t_tree_node *node, t_shell *myshell)
 {
 	if (!node)
 		return ;
 	if (node->type == ND_PIPE)
 	{
-		init_tree(node->left, myshell, exit_code);
+		init_tree(node->left, myshell);
 		if (!myshell->heredoc_sigint)
-			init_tree(node->right, myshell, exit_code);
+			init_tree(node->right, myshell);
 	}
 	else
-		init_leaf(node, myshell, exit_code);
+		init_leaf(node, myshell);
 }

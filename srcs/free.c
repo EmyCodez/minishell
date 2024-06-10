@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 12:07:57 by esimpson          #+#    #+#             */
-/*   Updated: 2024/06/09 10:37:50 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:04:38 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ void	free_2d_array(char **arr)
 	free_ptr(arr);
 }
 
-void	free_exit(t_shell *myshell, int *exit_status)
+void	clean_shell(t_shell *myshell)
 {
-	free_ptr(myshell->buff);
+	garbage_collection(NULL, 1);
 	clear_tree(&myshell->tree, &myshell->token_lst);
 	free_env_list(myshell->env_list);
-	exit(*exit_status);
+	rl_clear_history();
+	tcsetattr(STDIN_FILENO, TCSANOW, &myshell->og_term);
 }

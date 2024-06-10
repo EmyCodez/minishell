@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:33:24 by esimpson          #+#    #+#             */
-/*   Updated: 2024/06/10 10:50:01 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:56:29 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../libft/libft.h"
 
-static void	init_shell(t_shell *myshell, char **envp, int *exit_code)
+static void	init_shell(t_shell *myshell, char **envp)
 {
-	*exit_code = 0;
 	ft_memset(myshell, 0, sizeof(t_shell));
 	myshell->env = envp;
 	myshell->env_list = 0;
@@ -26,15 +25,15 @@ static void	init_shell(t_shell *myshell, char **envp, int *exit_code)
 	myshell->sigint_child = 0;
 }
 
-static void	start_execution(t_shell *myshell, int *exit_code)
+static void	start_execution(t_shell *myshell)
 {
-	init_tree(myshell->tree, myshell, exit_code);
+	init_tree(myshell->tree, myshell);
 	if (myshell->heredoc_sigint)
 	{
 		clear_tree(&myshell->tree, &myshell->token_lst);
 		myshell->heredoc_sigint = 0;
 	}
-	*exit_code = execute_node(myshell->tree, 0, myshell, exit_code);
+	myshell->exit_code = execute_node(myshell->tree, 0, myshell);
 	clear_tree(&myshell->tree, &myshell->token_lst);
 }
 
@@ -50,46 +49,43 @@ static void	start_execution(t_shell *myshell, int *exit_code)
 //     }
 // }
 
-static void	command_execution(t_shell *myshell, int *exit_code)
+static void	command_execution(t_shell *myshell)
 {
 	unsigned int	parse_error;
 
 	parse_error = 0;
 	add_history(myshell->buff);
-	myshell->token_lst = tokenizer(myshell->buff, exit_code);
+	myshell->token_lst = tokenizer(myshell->buff, &myshell->exit_code);
 	myshell->curr_token = myshell->token_lst;
 	myshell->tree = parser(&myshell->token_lst, &myshell->curr_token,
 			&parse_error);
 	if (parse_error)
-		handle_parse_error(&parse_error, myshell, exit_code);
-	start_execution(myshell, exit_code);
+		handle_parse_error(&parse_error, myshell);
+	start_execution(myshell);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	myshell;
-	int		exit_code;
-
+	
 	(void)argc;
 	(void)argv;
-	exit_code = 0;
-	init_shell(&myshell, envp, &exit_code);
+	
+	init_shell(&myshell, envp);
 	while (1)
 	{
 		myshell.buff = readline(PROMPT_MSG);
 		if (!myshell.buff)
 		{
-			ft_putstr_fd("exit\n", STDOUT_FILENO);
-			free_env_list(myshell.env_list);
-			return (exit_code);
+			ft_putstr_fd("exit\n", 1);
+			clean_shell(&myshell);
+			return (myshell.exit_code);
 		}
 		if (!is_valid_input(myshell.buff))
 			free_ptr(myshell.buff);
 		else
-			command_execution(&myshell, &exit_code);
+			command_execution(&myshell);
 	}
-	//rl_clear_history();
-	free_env_list(myshell.env_list);
-	free_token_list(&myshell.token_lst);
-	return (exit_code);
+	garbage_collection(NULL, 1);
+	return (clean_shell(&myshell), myshell.exit_code);
 }

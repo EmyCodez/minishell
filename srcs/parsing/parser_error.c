@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:10:06 by emilin            #+#    #+#             */
-/*   Updated: 2024/05/25 14:46:57 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/10 13:00:45 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_parse_error(unsigned int *parse_error, int error_type)
 }
 
 void	handle_parse_error(unsigned int *parse_error,
-		t_shell *myshell, int *exit_code)
+		t_shell *myshell)
 {
 	char			**tkn_values;
 	t_token_type	token_type;
@@ -37,10 +37,9 @@ void	handle_parse_error(unsigned int *parse_error,
 			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 			ft_putstr_fd(tkn_values[token_type], 2);
 			ft_putstr_fd("'\n", 2);
-			*exit_code = 258;
+			myshell->exit_code = 258;
 		}
 		clear_tree(&myshell->tree, &myshell->token_lst);
 		*parse_error = 0;
 	}
 }
-
