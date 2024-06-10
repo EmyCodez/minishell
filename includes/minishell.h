@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/06/06 15:27:13 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/09 10:31:31 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int     is_valid_variable_char(char ch);
 char	**expand_str(char *str, int *exit_code, t_env **env_list);
 
 /* -------- heredoc_expander ----- */
-void	heredoc_expander(char *str, int fd, int *exit_code);
+void	heredoc_expander(char *str, int fd, t_shell *myshell, int *exit_status);
 
 /* --- clean_empty_strings.c --- */
 char	*clean_empty_strs(char *str);
