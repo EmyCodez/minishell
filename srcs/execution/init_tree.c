@@ -6,11 +6,12 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:29:09 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/07 15:35:45 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/09 12:37:11 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "../../libft/libft.h"
 
 static void	heredoc_sigint_handler(int signum)
 {
@@ -19,7 +20,7 @@ static void	heredoc_sigint_handler(int signum)
 	exit(SIGINT);
 }
 
-void	ft_heredoc(t_io_node *io, int p[2], int *exit_code)
+void	ft_heredoc(t_io_node *io, int p[2], int *exit_code, t_shell *myshell)
 {
 	char	*line;
 	char	*quotes;
@@ -33,17 +34,17 @@ void	ft_heredoc(t_io_node *io, int p[2], int *exit_code)
 		line = readline("> ");
 		if (!line)
 			break ;
-		// 	if (is_delimiter(io->value, line))
-		// 		break ;
-			if (!*quotes)
-				heredoc_expander(line, p[1],exit_code);
-		// 	else
-		// 	{
-		// 		ft_putstr_fd(line, p[1]);
-		// 		ft_putstr_fd("\n", p[1]);
-		// 	}
+		if (is_delimiter(io->value, line))
+			break ;
+		if (!*quotes)
+			heredoc_expander(line, p[1], myshell, exit_code);
+		else
+			{
+				ft_putstr_fd(line, p[1]);
+				ft_putstr_fd("\n", p[1]);
+			}
 	}
-	//ft_clean_ms();
+	free_exit(myshell, exit_code);
 	exit(0);
 }
 
@@ -66,7 +67,7 @@ static void	init_leaf(t_tree_node *node, t_shell *myshell, int *exit_code)
 
 	if (node->args)
 		 node->exp_args = expand_str(node->args, exit_code, &myshell->env_list);
-	node->io_list =0;	 
+	node->io_list = 0;	 
 	io = node->io_list;
 	while (io)
 	{
@@ -76,7 +77,7 @@ static void	init_leaf(t_tree_node *node, t_shell *myshell, int *exit_code)
 			myshell->sigint_child = 1;
 			pid = (signal(SIGQUIT, SIG_IGN), fork());
 			if (!pid)
-				ft_heredoc(io, p, exit_code);
+				ft_heredoc(io, p, exit_code, myshell);
 			if (leave_leaf(p, &pid, myshell))
 				return ;
 			io->heredoc = p[0];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:33:24 by esimpson          #+#    #+#             */
-/*   Updated: 2024/06/07 15:34:53 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/10 10:50:01 by esimpson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ static void	init_shell(t_shell *myshell, char **envp, int *exit_code)
 	myshell->sigint_child = 0;
 }
 
-static void start_execution(t_shell *myshell, int *exit_code)
+static void	start_execution(t_shell *myshell, int *exit_code)
 {
 	init_tree(myshell->tree, myshell, exit_code);
-	if(myshell->heredoc_sigint)
+	if (myshell->heredoc_sigint)
 	{
 		clear_tree(&myshell->tree, &myshell->token_lst);
 		myshell->heredoc_sigint = 0;
-	}	
-	*exit_code = execute_node(myshell->tree,0,myshell,exit_code);
-	clear_tree(&myshell->tree,&myshell->token_lst);
+	}
+	*exit_code = execute_node(myshell->tree, 0, myshell, exit_code);
+	clear_tree(&myshell->tree, &myshell->token_lst);
 }
 
 // static void inorderTraversal(t_tree_node* root) {
@@ -52,17 +52,17 @@ static void start_execution(t_shell *myshell, int *exit_code)
 
 static void	command_execution(t_shell *myshell, int *exit_code)
 {
-	unsigned int parse_error;
-	
-	parse_error=0;
+	unsigned int	parse_error;
+
+	parse_error = 0;
 	add_history(myshell->buff);
 	myshell->token_lst = tokenizer(myshell->buff, exit_code);
-	myshell->curr_token=myshell->token_lst;
-	myshell->tree = parser(&myshell->token_lst,&myshell->curr_token, &parse_error);
-	if(parse_error)
-		handle_parse_error(&parse_error,myshell, exit_code);
-			
-	start_execution(myshell,exit_code);
+	myshell->curr_token = myshell->token_lst;
+	myshell->tree = parser(&myshell->token_lst, &myshell->curr_token,
+			&parse_error);
+	if (parse_error)
+		handle_parse_error(&parse_error, myshell, exit_code);
+	start_execution(myshell, exit_code);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -88,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 			command_execution(&myshell, &exit_code);
 	}
-	rl_clear_history();
+	//rl_clear_history();
 	free_env_list(myshell.env_list);
 	free_token_list(&myshell.token_lst);
 	return (exit_code);
