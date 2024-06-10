@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esimpson <esimpson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:09:46 by emilin            #+#    #+#             */
-/*   Updated: 2024/06/10 10:56:55 by esimpson         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:54:53 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@
 # include "parsing.h"
 # include "tokenizer.h"
 
+#define DIR_LEFT  100
+#define DIR_RIGHT  101
+	
 typedef struct s_shell
 {
 	char		*buff;
 	char		**env;
+	int			exit_code;
 	t_env		*env_list;
 	t_token		*token_lst;
 	t_token		*curr_token;
@@ -30,6 +34,7 @@ typedef struct s_shell
 	int			stdout;
 	short		heredoc_sigint;
 	short		sigint_child;
+	struct 		termios	og_term;
 }				t_shell;
 
 typedef enum e_err_msg
@@ -66,24 +71,22 @@ typedef struct s_path
 
 /*---- parse_error.c ---- */
 
-void			handle_parse_error(unsigned int *parse_error, t_shell *myshell,
-					int *exit_code);
+void			handle_parse_error(unsigned int *parse_error, t_shell *myshell);
 
 /* ----- execute.c ---------- */
 int				get_exit_status(int status);
-int				execute_node(t_tree_node *tree, short piped, t_shell *myshell,
-					int *exit_code);
+int				execute_node(t_tree_node *tree, short piped, t_shell *myshell);
 
 /* ----- execute_builtin.c ----- */
-int				execute_builtin(char **args, int *exit_code, t_shell *myshell);
+int				execute_builtin(char **args, t_shell *myshell);
 int				chk_builtin(char *arg);
 
 /* ---- execute_simple_cmd.c ----*/
 int				execute_simple_cmd(t_tree_node *node, int piped,
-					t_shell *myshell, int *exit_code);
+					t_shell *myshell);
 
 /* -----  init_tree.c ----- */
-void			init_tree(t_tree_node *node, t_shell *myshell, int *exit_code);
+void			init_tree(t_tree_node *node, t_shell *myshell);
 
 /* ------ execute_utils.c --------*/
 int				is_delimiter(char *delimiter, char *str);

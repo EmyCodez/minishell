@@ -6,7 +6,7 @@
 /*   By: emilin <emilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 13:47:32 by esimpson          #+#    #+#             */
-/*   Updated: 2024/06/09 10:31:31 by emilin           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:03:03 by emilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <termios.h>
 
 /* Readline library headers */
 # include <readline/history.h>
@@ -39,13 +40,10 @@
 /* --- free.c --- */
 void	free_ptr(void *ptr);
 void	free_2d_array(char **arr);
-void	free_exit(t_shell *myshell, int *exit_status);
+void	clean_shell(t_shell *myshell);
 
 
 # define PROMPT_MSG "\033[1;36mminishell\033[34m$ \033[0m"
-
-/***sample test function will be changed ***/
-void	test_cmd(t_shell *myshell, int *exit_status);
 
 /* --- valid_utils.c --- */
 int		is_space(char c);
@@ -60,7 +58,7 @@ int     is_valid_variable_char(char ch);
 char	**expand_str(char *str, int *exit_code, t_env **env_list);
 
 /* -------- heredoc_expander ----- */
-void	heredoc_expander(char *str, int fd, t_shell *myshell, int *exit_status);
+void	heredoc_expander(char *str, int fd, t_shell *myshell);
 
 /* --- clean_empty_strings.c --- */
 char	*clean_empty_strs(char *str);
